@@ -57,7 +57,6 @@ class PayOnlineProvider extends ServiceProvider
         $this->app->bind(IReceiptService::class, function () {
             return new ReceiptService(config('payment.payonline.merchantId'), config('payment.payonline.secretKey'));
         });
-        $this->app->bind('\Payment', Payment::class);
     }
 
     /**
@@ -67,6 +66,6 @@ class PayOnlineProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [PayService::class, PayOnlineDriver::class, '\professionalweb\payment\PayOnline', '\Payment', IReceiptService::class];
+        return [PayService::class, PayOnlineDriver::class, '\professionalweb\payment\PayOnline', IReceiptService::class];
     }
 }
