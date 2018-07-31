@@ -2,12 +2,13 @@
 
 use professionalweb\payment\contracts\PayService;
 use professionalweb\payment\contracts\PayProtocol;
+use professionalweb\payment\interfaces\PayOnlineService;
 
 /**
  * Payment service. Pay, Check, etc
  * @package AlpinaDigital\Services
  */
-class PayOnlineDriver implements PayService
+class PayOnlineDriver implements PayService, PayOnlineService
 {
     /**
      * Payonline object

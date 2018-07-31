@@ -1,4 +1,4 @@
-<?php namespace professionalweb\payment\services\payonline;
+<?php namespace professionalweb\payment\services;
 
 use Illuminate\Contracts\Support\Arrayable;
 

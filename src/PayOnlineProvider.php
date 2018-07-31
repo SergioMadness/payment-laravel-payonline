@@ -2,7 +2,9 @@
 
 use Illuminate\Support\ServiceProvider;
 use professionalweb\payment\contracts\PayService;
-use professionalweb\payment\services\payonline\ReceiptService;
+use professionalweb\payment\services\ReceiptService;
+use professionalweb\payment\contracts\PaymentFacade;
+use professionalweb\payment\interfaces\PayOnlineService;
 use professionalweb\payment\drivers\payonline\PayOnlineDriver;
 use professionalweb\payment\drivers\payonline\PayOnlineProtocol;
 use professionalweb\payment\contracts\ReceiptService as IReceiptService;
@@ -20,6 +22,11 @@ class PayOnlineProvider extends ServiceProvider
      */
     protected $defer = true;
 
+    public function boot()
+    {
+        app(PaymentFacade::class)->registerDriver(PayOnlineService::PAYMENT_PAYONLINE, PayOnlineService::class);
+    }
+
     /**
      * Bind two classes
      *
@@ -27,6 +34,11 @@ class PayOnlineProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(PayOnlineService::class, function ($app) {
+            return (new PayOnlineDriver(config('payment.payonline')))->setTransport(
+                new PayOnlineProtocol(config('payment.payonline.merchantId'), config('payment.payonline.secretKey'))
+            );
+        });
         $this->app->bind(PayService::class, function ($app) {
             return (new PayOnlineDriver(config('payment.payonline')))->setTransport(
                 new PayOnlineProtocol(config('payment.payonline.merchantId'), config('payment.payonline.secretKey'))
