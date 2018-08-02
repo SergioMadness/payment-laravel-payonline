@@ -6,7 +6,7 @@ use professionalweb\payment\interfaces\PayOnlineService;
 
 /**
  * Payment service. Pay, Check, etc
- * @package AlpinaDigital\Services
+ * @package professionalweb\payment\drivers\payonline
  */
 class PayOnlineDriver implements PayService, PayOnlineService
 {
