@@ -15,12 +15,6 @@ use professionalweb\payment\contracts\ReceiptService as IReceiptService;
  */
 class PayOnlineProvider extends ServiceProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
 
     public function boot()
     {
@@ -57,15 +51,5 @@ class PayOnlineProvider extends ServiceProvider
         $this->app->bind(IReceiptService::class, function () {
             return new ReceiptService(config('payment.payonline.merchantId'), config('payment.payonline.secretKey'));
         });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return [PayService::class, PayOnlineDriver::class, '\professionalweb\payment\PayOnline', IReceiptService::class];
     }
 }
