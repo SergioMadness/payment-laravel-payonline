@@ -1,5 +1,6 @@
 <?php namespace professionalweb\payment\drivers\payonline;
 
+use Illuminate\Contracts\Support\Arrayable;
 use professionalweb\payment\contracts\PayService;
 use professionalweb\payment\contracts\PayProtocol;
 use professionalweb\payment\interfaces\PayOnlineService;
@@ -322,5 +323,46 @@ class PayOnlineDriver implements PayService, PayOnlineService
     public function getPaymentId()
     {
         return $this->getResponseParam('PaymentId');
+    }
+
+    /**
+     * Payment system need form
+     * You can not get url for redirect
+     *
+     * @return bool
+     */
+    public function needForm(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Generate payment form
+     *
+     * @param int       $orderId
+     * @param int       $paymentId
+     * @param float     $amount
+     * @param string    $currency
+     * @param string    $paymentType
+     * @param string    $successReturnUrl
+     * @param string    $failReturnUrl
+     * @param string    $description
+     * @param array     $extraParams
+     * @param Arrayable $receipt
+     *
+     * @return string
+     */
+    public function getPaymentForm($orderId,
+                                   $paymentId,
+                                   $amount,
+                                   $currency = self::CURRENCY_RUR,
+                                   $paymentType = self::PAYMENT_TYPE_CARD,
+                                   $successReturnUrl = '',
+                                   $failReturnUrl = '',
+                                   $description = '',
+                                   $extraParams = [],
+                                   $receipt = null)
+    {
+        return '';
     }
 }
