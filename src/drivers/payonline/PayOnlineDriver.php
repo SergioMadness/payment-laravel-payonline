@@ -1,8 +1,10 @@
 <?php namespace professionalweb\payment\drivers\payonline;
 
+use professionalweb\payment\Form;
 use Illuminate\Contracts\Support\Arrayable;
 use professionalweb\payment\contracts\PayService;
 use professionalweb\payment\contracts\PayProtocol;
+use professionalweb\payment\contracts\Form as IForm;
 use professionalweb\payment\interfaces\PayOnlineService;
 
 /**
@@ -331,7 +333,7 @@ class PayOnlineDriver implements PayService, PayOnlineService
      *
      * @return bool
      */
-    public function needForm(): bool
+    public function needForm()
     {
         return false;
     }
@@ -350,7 +352,7 @@ class PayOnlineDriver implements PayService, PayOnlineService
      * @param array     $extraParams
      * @param Arrayable $receipt
      *
-     * @return string
+     * @return IForm
      */
     public function getPaymentForm($orderId,
                                    $paymentId,
@@ -363,6 +365,6 @@ class PayOnlineDriver implements PayService, PayOnlineService
                                    $extraParams = [],
                                    $receipt = null)
     {
-        return '';
+        return new Form();
     }
 }
