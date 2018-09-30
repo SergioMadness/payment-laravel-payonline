@@ -1,75 +1,77 @@
 <?php namespace professionalweb\payment\drivers\payonline;
 
+use professionalweb\payment\drivers\receipt\Receipt as IReceipt;
+
 /**
  * Receipt
  * @package professionalweb\payment\drivers\payonline
  */
-class Receipt extends \professionalweb\payment\drivers\receipt\Receipt
+class Receipt extends IReceipt
 {
     /**
      * Operation type "Benefit"
      */
-    const OPERATION_TYPE_BENEFIT = 'Benefit';
+    public const OPERATION_TYPE_BENEFIT = 'Benefit';
 
     /**
      * Operation type "Charge"
      */
-    const OPERATION_TYPE_CHARGE = 'Charge';
+    public const OPERATION_TYPE_CHARGE = 'Charge';
 
     /**
      * Payment by card
      */
-    const PAYMENT_TYPE_CARD = 'card';
+    public const PAYMENT_TYPE_CARD = 'card';
 
     /**
      * Payment through WebMoney
      */
-    const PAYMENT_TYPE_WEBMONEY = 'wm';
+    public const PAYMENT_TYPE_WEBMONEY = 'wm';
 
     /**
      * Payment through Yandex.Money
      */
-    const PAYMENT_TYPE_YANDEX_MONEY = 'yd';
+    public const PAYMENT_TYPE_YANDEX_MONEY = 'yd';
 
     /**
      * Payment through Qiwi
      */
-    const PAYMENT_TYPE_QIWI = 'qiwi';
+    public const PAYMENT_TYPE_QIWI = 'qiwi';
 
     /**
      * Payment through custom payment system
      */
-    const PAYMENT_TYPE_CUSTOM = 'custom';
+    public const PAYMENT_TYPE_CUSTOM = 'custom';
 
     /**
      * No taxes
      */
-    const TAX_NONE = 'none';
+    public const TAX_NONE = 'none';
 
     /**
      * 0%
      */
-    const TAX_VAT0 = 'vat0';
+    public const TAX_VAT0 = 'vat0';
 
     /**
      * 10%
      */
-    const TAX_VAT10 = 'vat10';
+    public const TAX_VAT10 = 'vat10';
 
     /**
      * 18%
      */
-    const TAX_VAT18 = 'vat18';
+    public const TAX_VAT18 = 'vat18';
 
     /**
      * 10/110
      */
-    const TAX_VAT110 = 'vat110';
+    public const TAX_VAT110 = 'vat110';
 
     /**
      * 18/118
      */
-    const TAX_VAT118 = 'vat118';
+    public const TAX_VAT118 = 'vat118';
 
     /**
      * Operation type
@@ -102,8 +104,8 @@ class Receipt extends \professionalweb\payment\drivers\receipt\Receipt
      * @param string     $taxSystem
      * @param string     $operation
      */
-    public function __construct($email = null, array $items = [], $paymentType = self::PAYMENT_TYPE_CARD, $transactionId = null,
-                                $taxSystem = self::TAX_VAT18, $operation = self::OPERATION_TYPE_BENEFIT)
+    public function __construct(?string $email = null, array $items = [], string $paymentType = self::PAYMENT_TYPE_CARD, ?string $transactionId = null,
+                                string $taxSystem = self::TAX_VAT18, string $operation = self::OPERATION_TYPE_BENEFIT)
     {
         parent::__construct($email, $items, $taxSystem);
 
@@ -115,7 +117,7 @@ class Receipt extends \professionalweb\payment\drivers\receipt\Receipt
      *
      * @return string
      */
-    public function getPaymentType()
+    public function getPaymentType(): string
     {
         return $this->paymentType;
     }
@@ -127,7 +129,7 @@ class Receipt extends \professionalweb\payment\drivers\receipt\Receipt
      *
      * @return Receipt
      */
-    public function setPaymentType($paymentType)
+    public function setPaymentType(string $paymentType): self
     {
         $this->paymentType = $paymentType;
 
@@ -139,7 +141,7 @@ class Receipt extends \professionalweb\payment\drivers\receipt\Receipt
      *
      * @return string
      */
-    public function getTransactionId()
+    public function getTransactionId(): string
     {
         return $this->transactionId;
     }
@@ -151,7 +153,7 @@ class Receipt extends \professionalweb\payment\drivers\receipt\Receipt
      *
      * @return Receipt
      */
-    public function setTransactionId($transactionId)
+    public function setTransactionId(string $transactionId): self
     {
         $this->transactionId = $transactionId;
 
@@ -165,7 +167,7 @@ class Receipt extends \professionalweb\payment\drivers\receipt\Receipt
      *
      * @return $this
      */
-    public function setOperation($operation)
+    public function setOperation(string $operation): self
     {
         $this->operation = $operation;
 
@@ -177,7 +179,7 @@ class Receipt extends \professionalweb\payment\drivers\receipt\Receipt
      *
      * @return string
      */
-    public function getOperation()
+    public function getOperation(): string
     {
         return $this->operation;
     }
@@ -214,7 +216,7 @@ class Receipt extends \professionalweb\payment\drivers\receipt\Receipt
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return json_encode($this->toArray());
     }

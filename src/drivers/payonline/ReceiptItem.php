@@ -1,40 +1,42 @@
 <?php namespace professionalweb\payment\drivers\payonline;
 
+use professionalweb\payment\drivers\receipt\ReceiptItem as IReceiptItem;
+
 /**
  * Receipt item
  * @package professionalweb\payment\drivers\payonline
  */
-class ReceiptItem extends \professionalweb\payment\drivers\receipt\ReceiptItem
+class ReceiptItem extends IReceiptItem
 {
     /**
      * без НДС
      */
-    const TAX_NO_VAT = 'none';
+    public const TAX_NO_VAT = 'none';
 
     /**
      * НДС по ставке 0%
      */
-    const TAX_VAT_0 = 'vat0';
+    public const TAX_VAT_0 = 'vat0';
 
     /**
      * НДС чека по ставке 10%
      */
-    const TAX_VAT_10 = 'vat10';
+    public const TAX_VAT_10 = 'vat10';
 
     /**
      * НДС чека по ставке 18%
      */
-    const TAX_VAT_18 = 'vat18';
+    public const TAX_VAT_18 = 'vat18';
 
     /**
      * НДС чека по расчетной ставке 10/110
      */
-    const TAX_VAT_110 = 'vat110';
+    public const TAX_VAT_110 = 'vat110';
 
     /**
      * НДС чека по расчетной ставке 18/118
      */
-    const TAX_VAT_118 = 'vat118';
+    public const TAX_VAT_118 = 'vat118';
 
     /**
      * Get the instance as an array.
@@ -45,9 +47,9 @@ class ReceiptItem extends \professionalweb\payment\drivers\receipt\ReceiptItem
     {
         return [
             'description' => mb_substr($this->getName(), 0, 128),
-            'quantity' => (int)$this->getQty(),
-            'amount' => (float)$this->getPrice(),
-            'tax' => $this->getTax(),
+            'quantity'    => $this->getQty(),
+            'amount'      => $this->getPrice(),
+            'tax'         => $this->getTax(),
         ];
     }
 }

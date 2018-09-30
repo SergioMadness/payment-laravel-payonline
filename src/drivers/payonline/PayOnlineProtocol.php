@@ -18,7 +18,7 @@ class PayOnlineProtocol extends \PayOnline implements PayProtocol
      *
      * @return string
      */
-    public function getPaymentUrl($params)
+    public function getPaymentUrl(array $params): string
     {
         return $this->getUrl($params);
     }
@@ -30,11 +30,11 @@ class PayOnlineProtocol extends \PayOnline implements PayProtocol
      *
      * @return bool
      */
-    public function validate($params)
+    public function validate(array $params): bool
     {
         $result = false;
 
-        if (isset($params['SecurityKey']) && $this->getSecurityKey('callback', $params) == $params['SecurityKey']) {
+        if (isset($params['SecurityKey']) && $this->getSecurityKey('callback', $params) === $params['SecurityKey']) {
             $result = true;
         }
 
@@ -46,9 +46,9 @@ class PayOnlineProtocol extends \PayOnline implements PayProtocol
      *
      * @return mixed
      */
-    public function getPaymentId()
+    public function getPaymentId(): string
     {
-        return null;
+        return '';
     }
 
     /**
@@ -59,9 +59,9 @@ class PayOnlineProtocol extends \PayOnline implements PayProtocol
      *
      * @return string
      */
-    public function getNotificationResponse($requestData, $errorCode = null)
+    public function getNotificationResponse($requestData, $errorCode = null): string
     {
-        return $errorCode > 0 ? response('ERROR') : response('OK');
+        return $errorCode > 0 ? 'ERROR' : 'OK';
     }
 
     /**
@@ -72,8 +72,20 @@ class PayOnlineProtocol extends \PayOnline implements PayProtocol
      *
      * @return string
      */
-    public function getCheckResponse($requestData, $errorCode = null)
+    public function getCheckResponse($requestData, $errorCode = null): string
     {
-        return $errorCode > 0 ? response('ERROR') : response('OK');
+        return $errorCode > 0 ? 'ERROR' : 'OK';
+    }
+
+    /**
+     * Prepare parameters
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function prepareParams(array $params): array
+    {
+        return $params;
     }
 }

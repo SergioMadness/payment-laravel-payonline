@@ -16,7 +16,7 @@ use professionalweb\payment\contracts\ReceiptService as IReceiptService;
 class PayOnlineProvider extends ServiceProvider
 {
 
-    public function boot()
+    public function boot(): void
     {
         app(PaymentFacade::class)->registerDriver(PayOnlineService::PAYMENT_PAYONLINE, PayOnlineService::class);
     }
@@ -26,7 +26,7 @@ class PayOnlineProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->bind(PayOnlineService::class, function ($app) {
             return (new PayOnlineDriver(config('payment.payonline')))->setTransport(

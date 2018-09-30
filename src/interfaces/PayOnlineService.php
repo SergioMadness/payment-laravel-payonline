@@ -2,5 +2,5 @@
 
 interface PayOnlineService
 {
-    const PAYMENT_PAYONLINE = 'payonline';
+    public const PAYMENT_PAYONLINE = 'payonline';
 }

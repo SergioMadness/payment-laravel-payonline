@@ -1,18 +1,19 @@
 <?php namespace professionalweb\payment\services;
 
-use Illuminate\Contracts\Support\Arrayable;
+use professionalweb\payment\contracts\Receipt;
+use professionalweb\payment\contracts\ReceiptService as IReceiptService;
 
 /**
  * PayOnline service to send receipts
  * @package professionalweb\payment\services\payonline
  */
-class ReceiptService implements \professionalweb\payment\contracts\ReceiptService
+class ReceiptService implements IReceiptService
 {
 
     /**
      * Url to send invoices
      */
-    const URL_FISCAL_SERVICE = 'https://secure.payonlinesystem.com/Services/Fiscal/Request.ashx';
+    public const URL_FISCAL_SERVICE = 'https://secure.payonlinesystem.com/Services/Fiscal/Request.ashx';
 
     /**
      * Security key
@@ -28,7 +29,7 @@ class ReceiptService implements \professionalweb\payment\contracts\ReceiptServic
      */
     private $merchantId;
 
-    public function __construct($merchantId = null, $securityKey = null)
+    public function __construct(?string $merchantId = null, ?string $securityKey = null)
     {
         $this->setMerchantId($merchantId)->setSecurityKey($securityKey);
     }
@@ -36,11 +37,11 @@ class ReceiptService implements \professionalweb\payment\contracts\ReceiptServic
     /**
      * Send receipt
      *
-     * @param Arrayable $receipt
+     * @param Receipt $receipt
      *
      * @return mixed
      */
-    public function sendReceipt(Arrayable $receipt)
+    public function sendReceipt(Receipt $receipt)
     {
         $receiptArr = $receipt->toArray();
 
@@ -55,7 +56,7 @@ class ReceiptService implements \professionalweb\payment\contracts\ReceiptServic
      *
      * @return string
      */
-    protected function getHash(array $receipt)
+    protected function getHash(array $receipt): string
     {
         return md5('RequestBody=' . json_encode($receipt) . '&MerchantId=' . $this->getMerchantId() . '&PrivateSecurityKey=' . $this->getSecurityKey());
     }
@@ -63,7 +64,7 @@ class ReceiptService implements \professionalweb\payment\contracts\ReceiptServic
     /**
      * @return string
      */
-    public function getSecurityKey()
+    public function getSecurityKey(): string
     {
         return $this->securityKey;
     }
@@ -75,7 +76,7 @@ class ReceiptService implements \professionalweb\payment\contracts\ReceiptServic
      *
      * @return ReceiptService
      */
-    public function setSecurityKey($securityKey)
+    public function setSecurityKey(?string $securityKey): self
     {
         $this->securityKey = $securityKey;
 
@@ -87,7 +88,7 @@ class ReceiptService implements \professionalweb\payment\contracts\ReceiptServic
      *
      * @return string
      */
-    public function getMerchantId()
+    public function getMerchantId(): string
     {
         return $this->merchantId;
     }
@@ -99,7 +100,7 @@ class ReceiptService implements \professionalweb\payment\contracts\ReceiptServic
      *
      * @return ReceiptService
      */
-    public function setMerchantId($merchantId)
+    public function setMerchantId(?string $merchantId): self
     {
         $this->merchantId = $merchantId;
 
@@ -114,7 +115,7 @@ class ReceiptService implements \professionalweb\payment\contracts\ReceiptServic
      *
      * @return mixed
      */
-    protected function send($url, array $params)
+    protected function send(string $url, array $params)
     {
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_USERAGENT, 'Payonline.SDK/PHP');
